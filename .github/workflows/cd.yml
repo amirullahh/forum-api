@@ -1,0 +1,71 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests before deployment
+        run: npm test
+        env:
+          PGHOST: ${{ secrets.PGHOST }}
+          PGUSER: ${{ secrets.PGUSER }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD }}
+          PGDATABASE: ${{ secrets.PGDATABASE_TEST }}
+          PGPORT: ${{ secrets.PGPORT }}
+          ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
+          REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
+          ACCCESS_TOKEN_AGE: 3000
+
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            # Navigate to project directory
+            cd ${{ secrets.APP_PATH || '~/forum-api' }}
+
+            # Pull latest code from repository
+            git pull origin main
+
+            # Install/update dependencies
+            npm ci --production
+
+            # Run database migrations
+            npm run migrate up
+
+            # Reload PM2 process (or restart service)
+            # Adjust this command based on your process manager
+            pm2 reload forum-api || pm2 start src/app.js --name forum-api
+
+            # Alternative for systemd service:
+            # sudo systemctl restart forum-api
+
+      - name: Deployment Status
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "✅ Deployment successful!"
+          else
+            echo "❌ Deployment failed!"
+          fi

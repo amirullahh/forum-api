@@ -1,0 +1,87 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: developer
+          POSTGRES_PASSWORD: supersecretpassword
+          POSTGRES_DB: forumapi_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run database migrations
+        run: npm run migrate:test up
+        env:
+          PGHOST: localhost
+          PGUSER: developer
+          PGPASSWORD: supersecretpassword
+          PGDATABASE: forumapi_test
+          PGPORT: 5432
+
+      - name: Run tests
+        run: npm test
+        env:
+          PGHOST: localhost
+          PGUSER: developer
+          PGPASSWORD: supersecretpassword
+          PGDATABASE: forumapi_test
+          PGPORT: 5432
+          # Token keys for testing
+          ACCESS_TOKEN_KEY: test-access-token-key
+          REFRESH_TOKEN_KEY: test-refresh-token-key
+          ACCCESS_TOKEN_AGE: 3000
+
+      - name: Run test coverage
+        run: npm run test:coverage
+        env:
+          PGHOST: localhost
+          PGUSER: developer
+          PGPASSWORD: supersecretpassword
+          PGDATABASE: forumapi_test
+          PGPORT: 5432
+          ACCESS_TOKEN_KEY: test-access-token-key
+          REFRESH_TOKEN_KEY: test-refresh-token-key
+          ACCCESS_TOKEN_AGE: 3000
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false

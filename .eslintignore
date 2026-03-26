@@ -1,0 +1,5 @@
+node_modules/
+migrations/
+coverage/
+*.config.js
+.eslintrc.js
