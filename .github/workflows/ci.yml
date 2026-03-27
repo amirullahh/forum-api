@@ -12,7 +12,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:14
+        image: postgres:15
         env:
           POSTGRES_USER: developer
           POSTGRES_PASSWORD: supersecretpassword
@@ -20,10 +20,10 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-cmd="pg_isready -U developer"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     strategy:
       matrix:
@@ -62,7 +62,6 @@ jobs:
           PGPASSWORD: supersecretpassword
           PGDATABASE: forumapi_test
           PGPORT: 5432
-          # Token keys for testing
           ACCESS_TOKEN_KEY: test-access-token-key
           REFRESH_TOKEN_KEY: test-refresh-token-key
           ACCESS_TOKEN_AGE: 3000
@@ -77,7 +76,7 @@ jobs:
           PGPORT: 5432
           ACCESS_TOKEN_KEY: test-access-token-key
           REFRESH_TOKEN_KEY: test-refresh-token-key
-          ACCCESS_TOKEN_AGE: 3000
+          ACCESS_TOKEN_AGE: 3000
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4
