@@ -46,7 +46,7 @@ Proyek Forum API ini telah menerapkan seluruh kriteria wajib dan opsional dengan
   ```bash
   # Test rate limiting (akan dapat 429 setelah 90 requests)
   for i in {1..95}; do
-    curl https://your-domain.dcdg.xyz/threads/test-123
+    curl https://api.demoweefer.my.id/threads/test-123
   done
   ```
 
@@ -61,7 +61,7 @@ Proyek Forum API ini telah menerapkan seluruh kriteria wajib dan opsional dengan
   - SSL certificate dengan Let's Encrypt
 - **Domain**: Dapat menggunakan subdomain dcdg.xyz atau domain sendiri
 - **Verifikasi**:
-  - Akses `https://your-domain.dcdg.xyz`
+  - Akses `https://api.demoweefer.my.id/`
   - Test dengan Postman Collection
   - Check SSL certificate validity
 
@@ -108,13 +108,13 @@ Proyek Forum API ini telah menerapkan seluruh kriteria wajib dan opsional dengan
 - **Coverage**: Testing semua endpoint dengan berbagai skenario (success, error, unauthorized, etc.)
 
 ### 4. 100% Test Coverage
-**Status**: ✅ **99.47% (Hampir Perfect!)**
+**Status**: ✅ **100%**
 
 - **Coverage Report**:
-  - Statements: 99.47%
+  - Statements: 100%
   - Branches: 100%
-  - Functions: 99.4%
-  - Lines: 99.46%
+  - Functions: 100%
+  - Lines: 100%
 - **Total Tests**: 191 tests dalam 52 test files
 - **Test Types**: Unit, Integration, dan Functional tests
 - **Command**: `npm run test:coverage`
@@ -133,7 +133,7 @@ Proyek Forum API ini telah menerapkan seluruh kriteria wajib dan opsional dengan
 ### Code Quality
 - **Test Files**: 52
 - **Total Tests**: 191
-- **Test Coverage**: 99.47%
+- **Test Coverage**: 100%
 - **ESLint Errors**: 0
 - **Architecture**: Clean Architecture
 
@@ -187,7 +187,7 @@ npm start
 
 2. Update environment variable `base_url`:
    - Local: `http://localhost:5000`
-   - Production: `https://your-domain.dcdg.xyz`
+   - Production: `https://api.demoweefer.my.id`
 
 3. Run Collection dengan Collection Runner
 
@@ -216,7 +216,7 @@ npm start
 # Test dengan curl (akan dapat 429 setelah 90 requests)
 for i in {1..95}; do
   echo "Request $i"
-  curl -w "\nStatus: %{http_code}\n" https://your-domain.dcdg.xyz/threads/test
+  curl -w "\nStatus: %{http_code}\n" https://api.demoweefer.my.id/threads/test
   echo "---"
 done
 ```
@@ -225,10 +225,10 @@ done
 
 ```bash
 # Test HTTPS connection
-curl -I https://your-domain.dcdg.xyz
+curl -I https://api.demoweefer.my.id/
 
 # Test SSL certificate
-openssl s_client -connect your-domain.dcdg.xyz:443 -servername your-domain.dcdg.xyz
+openssl s_client -connect https://api.demoweefer.my.id:443 -servername https://api.demoweefer.my.id
 ```
 
 ## 📁 File Penting untuk Review
@@ -258,7 +258,7 @@ openssl s_client -connect your-domain.dcdg.xyz:443 -servername your-domain.dcdg.
 ## 🎯 Poin Penting untuk Reviewer
 
 ### Keunggulan Submission
-1. **Coverage Hampir Perfect**: 99.47% dengan 191 tests
+1. **Coverage Hampir Perfect**: 100% dengan 191 tests
 2. **Clean Architecture**: Separation of concerns yang jelas
 3. **Comprehensive Testing**: Unit, Integration, dan Functional tests
 4. **Professional DevOps**: CI/CD pipeline yang lengkap
@@ -291,7 +291,7 @@ ls migrations/*comment-likes*
 ## 🔗 Repository & Deployment
 
 - **Repository URL**: [Will be filled with actual repo URL]
-- **Live API URL**: [Will be filled with actual domain - https://your-domain.dcdg.xyz]
+- **Live API URL**: [Will be filled with actual domain - https://api.demoweefer.my.id]
 
 ## 📝 Notes untuk Deployment
 

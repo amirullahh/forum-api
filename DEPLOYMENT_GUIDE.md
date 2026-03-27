@@ -53,7 +53,7 @@ GRANT ALL PRIVILEGES ON DATABASE forumapi_test TO developer;
 ```bash
 # Clone repository
 cd ~
-git clone https://github.com/your-username/forum-api.git
+git clone https://github.com/amirullahh/forum-api.git
 cd forum-api
 
 # Install dependencies
@@ -205,7 +205,7 @@ curl http://localhost:5000/health
 ### ✅ HTTPS Working
 ```bash
 # Test HTTPS
-curl https://your-domain.dcdg.xyz/health
+curl https://api.demoweefer.my.id/health
 
 # Check SSL certificate
 openssl s_client -connect your-domain.dcdg.xyz:443 -servername your-domain.dcdg.xyz
@@ -215,7 +215,7 @@ openssl s_client -connect your-domain.dcdg.xyz:443 -servername your-domain.dcdg.
 ```bash
 # Test rate limiting (should get 429 after 90 requests)
 for i in {1..95}; do
-  curl -w "\n%{http_code}\n" https://your-domain.dcdg.xyz/threads/test-123
+  curl -w "\n%{http_code}\n" https://api.demoweefer.my.id/threads/test-123
 done
 ```
 
@@ -228,7 +228,7 @@ done
 
 1. Import collection dari folder `Forum API V2 Test`
 2. Update environment variable:
-   - `base_url`: https://your-domain.dcdg.xyz
+   - `base_url`: https://api.demoweefer.my.id/
 3. Run collection dengan Collection Runner
 4. Semua tests harus passed (kecuali yang [optional])
 
