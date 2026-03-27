@@ -142,7 +142,7 @@ npm run test:coverage
 
 ### Base URL
 - Local: `http://localhost:5000`
-- Production: `https://your-domain.dcdg.xyz`
+- Production: `https://api.demoweefer.my.id/`
 
 ### Endpoints
 
@@ -287,4 +287,4 @@ Jika ada pertanyaan atau issue:
 
 ---
 
-**⭐ Star repository ini jika bermanfaat!**
+**⭐ Star repository ini jika bermanfaat ya!**
