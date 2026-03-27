@@ -268,6 +268,7 @@ This project is licensed under the ISC License.
 
 ## 👨‍💻 Author
 
+AMIRULLAH HIDAYAT
 Dicoding Indonesia - Expert Backend Developer Submission
 
 ## 🙏 Acknowledgments
